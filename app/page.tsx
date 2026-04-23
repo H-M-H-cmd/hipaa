@@ -532,7 +532,9 @@ function Home() {
           Smart Booking for Modern
           <br />
           Healthcare{" "}
+          <span className="sr-only">Providers</span>
           <span
+            aria-hidden="true"
             className="word-box"
             style={{
               position: "relative",
@@ -542,7 +544,7 @@ function Home() {
               minWidth: "14ch",
             }}
           >
-            <span aria-hidden style={{ visibility: "hidden", display: "block" }}>
+            <span style={{ visibility: "hidden", display: "block" }}>
               {WORDS[word.curr]}
             </span>
 
@@ -1770,6 +1772,19 @@ function BackToTop() {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: f.a,
+    },
+  })),
+};
+
 export default function Page() {
   useEffect(() => {
     const els = document.querySelectorAll("[data-reveal]");
@@ -1790,6 +1805,10 @@ export default function Page() {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Nav />
       <Home />
       <LogoStrip />
